@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../web_applications/music_web_app/web_app_2/web-applications-in-python-project-starter-html/templates/album"
+		},
+		{
+			"path": "../web_applications/music_web_app/web_app_2/web-applications-in-python-project-starter-html/lib"
+		}
+	],
+	"settings": {}
+}
