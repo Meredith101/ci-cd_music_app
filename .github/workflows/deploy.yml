@@ -25,7 +25,14 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest || true   # optional; change or remove if you want to fail on test failure
+          pytest || true  # optional; change or remove if you want to fail on test failure
+
+      - name: Add EC2 to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
 
       - name: Copy files to EC2
         env:
@@ -37,8 +44,8 @@ jobs:
           echo "$EC2_SSH_KEY" > private_key.pem
           chmod 600 private_key.pem
 
-          # Copy your app files (change as needed)
-          scp -i private_key.pem -r ./ ${EC2_USER}@${EC2_HOST}:${APP_PATH}
+          # Copy your app files to EC2
+          scp -i private_key.pem -o StrictHostKeyChecking=no -r ./ ${EC2_USER}@${EC2_HOST}:${APP_PATH}
 
           rm private_key.pem
 
