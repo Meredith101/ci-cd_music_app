@@ -1,6 +1,6 @@
 import os
 import psycopg2
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -32,8 +32,7 @@ def get_albums():
         {"id": row[0], "title": row[1], "release_year": row[2], "artist_id": row[3]}
         for row in albums
     ]
-    return jsonify(result)
-
+    return render_template('index.html', albums=albums_list)
 # GET a specific album
 @app.route("/albums/<int:album_id>", methods=["GET"])
 def get_album(album_id):
@@ -45,15 +44,17 @@ def get_album(album_id):
     conn.close()
 
     if album:
-        return jsonify({
+        album_dict = {
             "id": album[0],
             "title": album[1],
             "release_year": album[2],
             "artist_id": album[3]
-        })
+        }
+        # Render show.html passing the album data
+        return render_template("show.html", album=album_dict)
     else:
-        return jsonify({"error": "Album not found"}), 404
-
+        # You can render a custom 404 page or just show an error message
+        return render_template("404.html"), 404
 # POST a new album
 @app.route("/albums", methods=["POST"])
 def add_album():
