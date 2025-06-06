@@ -47,7 +47,7 @@ jobs:
         run: |
           echo "$EC2_SSH_KEY" > private_key.pem
           chmod 400 private_key.pem
-          scp -i private_key.pem -o StrictHostKeyChecking=no -r ./ ${EC2_USER}@${EC2_HOST}:${APP_PATH}
+          rsync -av --exclude='.git' --exclude='private_key.pem' -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" ./ ${EC2_USER}@${EC2_HOST}:${APP_PATH}
           rm private_key.pem
 
       - name: Restart Flask app on EC2
