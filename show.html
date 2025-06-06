@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Album Store - {{ album.title }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Reset + Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f7f9fc;
+      color: #333;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 30px;
+      color: #1a1a1a;
+    }
+
+    .album-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      transition: transform 0.3s ease;
+    }
+
+    .album-card:hover {
+      transform: scale(1.01);
+    }
+
+    .album-title {
+      font-size: 36px;
+      color: #d63384;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .album-meta {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .album-meta p {
+      font-size: 18px;
+      margin: 6px 0;
+    }
+
+    .delete-form {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .delete-button {
+      background: #ff4d4f;
+      border: none;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .delete-button:hover {
+      background: #d9363e;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #007bff;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+      color: #0056b3;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <h1>Album Details</h1>
+
+  <div class="album-card">
+    <div class="album-title">{{ album.title }}</div>
+
+    <div class="album-meta">
+      <p class="t-release_year">Release Year: {{ album.release_year }}</p>
+      <p class="t-artist_id">Artist ID: {{ album.artist_id }}</p>
+    </div>
+
+    <div class="delete-form">
+      <form action="/albums/{{ album.id }}/delete" method="post" onsubmit="return confirmDelete('{{ album.title }}');">
+        <input type="submit" value="Delete Album" class="delete-button">
+      </form>
+    </div>
+
+    <a class="back-link" href="/albums">← Back to all Albums</a>
+  </div>
+
+  <script>
+    function confirmDelete(title) {
+      return confirm(`Are you sure you want to delete "${title}"? This cannot be undone.`);
+    }
+  </script>
+</body>
+</html>
