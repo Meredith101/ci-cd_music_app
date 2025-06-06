@@ -42,7 +42,7 @@ jobs:
           APP_PATH: ${{ secrets.APP_PATH }}
         run: |
           echo "$EC2_SSH_KEY" > private_key.pem
-          chmod 600 private_key.pem
+          chmod 400 private_key.pem
 
           # Copy your app files to EC2
           scp -i private_key.pem -o StrictHostKeyChecking=no -r ./ ${EC2_USER}@${EC2_HOST}:${APP_PATH}
