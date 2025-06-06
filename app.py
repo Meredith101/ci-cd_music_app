@@ -32,7 +32,7 @@ def get_albums():
         {"id": row[0], "title": row[1], "release_year": row[2], "artist_id": row[3]}
         for row in albums
     ]
-    return render_template('index.html', albums=albums)
+    return render_template('index.html', albums=result)
 # GET a specific album
 @app.route("/albums/<int:album_id>", methods=["GET"])
 def get_album(album_id):
